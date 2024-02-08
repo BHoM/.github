@@ -9,11 +9,11 @@ The whole BHoM project uses an open-source model for project architecture, co-cr
 
 The BHoM integrates concepts from different languages, coding environments and platforms. It's designed to be compatible with both visual flow-based programming (e.g. [Grasshopper](https://simplyrhino.co.uk/3d-modelling-software/grasshopper), Excel) and programming (in particular, C#). This is to integrate well in existing workflows of professionals in the AEC industry, regardless of their level of computational proficiency. BHoM aims to combine the work of professional programmers with the valuable efforts of computational designers/engineers/architects and scripters, all in the same ecosystem.
 
-#### Contributing
+### Contributing
 
 Please see https://bhom.xyz/documentation/Contributing/! 🚀
 
-#### Documentation and Q&A
+### Documentation and Q&A
 
 All documentation can be found in https://bhom.xyz/documentation/!  
 We also have a space for questions and discussions: https://github.com/orgs/BHoM/discussions.

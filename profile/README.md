@@ -1,7 +1,5 @@
 ## Welcome to the BHoM!
 
-<!--
-
 The BHoM (Buildings and Habitats object Model) is a collaborative computational development project for the AEC (Architecture, Engineering and Construction) industry – the Built Environment.
 
 BHoM is a collection of schemas, functionality and conversions industry, with the aim of improving the way we work and communicate in AEC.
@@ -29,4 +27,3 @@ We also have a space for questions and discussions: https://github.com/orgs/BHoM
 
 Please let us know how can we improve it! Please raise GitHub Issues in the [Documentation repo](https://github.com/BHoM/documentation/issues) or start a [Discussion](https://github.com/orgs/BHoM/discussions).
 
--->

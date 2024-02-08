@@ -1,9 +1,9 @@
 ## Welcome to the BHoM!
 
-The BHoM (Buildings and Habitats object Model) is a collaborative computational development project for the AEC (Architecture, Engineering and Construction) industry – the Built Environment.
+The BHoM (Buildings and Habitats object Model) is a collaborative project for the AEC (Architecture, Engineering and Construction) industry, targeting the Built Environment and human Habitats.
 
 BHoM is a collection of schemas, functionality and conversions industry, with the aim of improving the way we work and communicate in AEC. BHoM is crafted as transdisciplinary, software-agnostic and office/region/country-invariant, and therefore would be nothing without our active community and wide range of contributors.  
-The whole BHoM project uses an open-source model for project architecture, co-creation and planning. Please explore, experiment and contribute to both the source code and the documentation! Open-source  means we can feed off and pool our disparate knowledge, experience and expertise towards a common goal – better design and a better Built Environment.
+The whole BHoM project uses an open-source model for project architecture, co-creation and planning. Please explore, experiment and contribute to both the source code and the documentation! Open-source  means we can feed off and pool our disparate knowledge, experience and expertise towards a common goal – better design and a better Built Environment and Habitats for everyone.
 
 ### Technical philosophy of the BHoM
 

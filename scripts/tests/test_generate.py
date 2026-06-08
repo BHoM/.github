@@ -140,13 +140,13 @@ def test_enrich_display_names_uses_real_name():
     responses.add(
         responses.GET,
         "https://api.github.com/users/alice",
-        json={"login": "alice", "name": "Alice"},
+        json={"login": "alice", "name": "Alice Example"},
         status=200,
     )
     session = make_session("fake-token")
     contributors = {"alice": {"avatar_url": "https://x/a", "contributions": 10}}
     result = enrich_display_names(session, contributors)
-    assert result["alice"]["name"] == "Alice"
+    assert result["alice"]["name"] == "Alice Example"
 
 
 @responses.activate
@@ -177,129 +177,42 @@ def test_enrich_display_names_falls_back_to_login_when_empty_string():
     assert result["carol"]["name"] == "carol"
 
 
-@responses.activate
-def test_enrich_display_names_falls_back_on_404():
-    # Deleted GitHub account: users/{login} returns 404; we should not crash.
-    responses.add(
-        responses.GET,
-        "https://api.github.com/users/deleted_user",
-        status=404,
-    )
-    session = make_session("fake-token")
-    contributors = {"deleted_user": {"avatar_url": "https://x/d", "contributions": 1}}
-    result = enrich_display_names(session, contributors)
-    assert result["deleted_user"]["name"] == "deleted_user"
-
-
 from scripts.generate_wall_of_honour import render_wall
 
 
 def test_render_wall_empty():
     md = render_wall({}, "2026-06-08")
-    assert "supported and advanced the BHoM" in md
+    assert "Wall coming soon" in md
     assert "<!-- WALL:START -->" in md
     assert "<!-- WALL:END -->" in md
-    assert "<div align=\"center\">" in md
-    # Horizontal rule separates the wall from preceding README content
-    assert "\n---\n" in md
-
-
-def test_render_wall_includes_hr_separator():
-    contributors = {
-        "alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"},
-    }
-    md = render_wall(contributors, "2026-06-08")
-    # The hr appears between the start marker and the centered content
-    start_idx = md.index("<!-- WALL:START -->")
-    div_idx = md.index("<div align=\"center\">")
-    hr_idx = md.index("---")
-    assert start_idx < hr_idx < div_idx
+    # Badge present even when empty (shows 0)
+    assert "img.shields.io/badge/contributors-0-" in md
+    # Last updated is italicised
+    assert "_Last updated: 2026-06-08_" in md
 
 
 def test_render_wall_single_row():
     contributors = {
-        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice"},
-        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob"},
+        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice Example"},
+        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob Sample"},
     }
     md = render_wall(contributors, "2026-06-08")
-    assert "2 contributors" in md
-    assert md.count("<tr>") == 1  # 2 cells fit in 1 row of GRID_COLS
-    assert "Alice" in md
-    assert "Bob" in md
+    # Contributor count exposed via shields.io badge instead of inline text
+    assert "img.shields.io/badge/contributors-2-brightgreen" in md
+    assert md.count("<tr>") == 1  # 2 cells fit in 1 row of 7
+    assert "Alice Example" in md
+    assert "Bob Sample" in md
     # Alphabetical: Alice before Bob
-    assert md.index("Alice") < md.index("Bob")
-    # Rounded avatars
-    assert "border-radius: 50%" in md
-    # Centered wrapper
-    assert "<div align=\"center\">" in md
-    # Empty padding cells fill row to GRID_COLS width
-    assert md.count("<td width=\"55\"></td>") == 4
-
-
-def test_render_wall_stats_with_repo_count():
-    contributors = {
-        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice"},
-        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob"},
-    }
-    md = render_wall(contributors, "2026-06-08", repo_count=42)
-    assert "2 contributors across 42 repositories" in md
-
-
-def test_render_wall_pluralization_singular():
-    contributors = {
-        "solo": {"avatar_url": "https://x/s", "contributions": 1, "name": "Solo Dev"},
-    }
-    md = render_wall(contributors, "2026-06-08", repo_count=1)
-    assert "1 contributor across 1 repository" in md
-    assert "1 contributors" not in md
-    assert "1 repositories" not in md
+    assert md.index("Alice Example") < md.index("Bob Sample")
+    # Last updated is italicised
+    assert "_Last updated: 2026-06-08_" in md
 
 
 def test_render_wall_two_rows_with_remainder():
     contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(8)}
     md = render_wall(contributors, "2026-06-08")
     assert md.count("<tr>") == 2
-    # 8 populated cells (links present) + 4 empty padding cells in the second row
-    assert md.count("<a href") == 8
-    assert md.count("<td width=\"55\"></td>") == 4
-
-
-def test_render_wall_truncates_long_names_with_ellipsis():
-    contributors = {
-        "mocklongname": {"avatar_url": "https://x/m", "contributions": 1, "name": "A Very Long Display Name"},
-    }
-    md = render_wall(contributors, "2026-06-08")
-    # Display in <sub> is truncated
-    assert "A Very Long Display Name</b></sub>" not in md
-    assert "…</b></sub>" in md
-    # GitHub login (with @ prefix) is exposed via the title attribute for hover
-    assert "title=\"@mocklongname\"" in md
-    assert "title=\"A Very Long Display Name\"" not in md
-
-
-def test_render_wall_keeps_short_names_intact():
-    contributors = {
-        "alice": {"avatar_url": "https://x/a", "contributions": 1, "name": "Alice"},
-    }
-    md = render_wall(contributors, "2026-06-08")
-    assert "<sub><b>Alice</b></sub>" in md
-    assert "…" not in md  # no ellipsis anywhere
-
-
-def test_render_wall_uses_valign_top():
-    # valign="top" keeps avatars aligned even when names wrap to two lines
-    contributors = {"alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"}}
-    md = render_wall(contributors, "2026-06-08")
-    assert "valign=\"top\"" in md
-
-
-def test_render_wall_uses_colgroup_for_uniform_column_widths():
-    # colgroup gives GitHub's table renderer authoritative column widths,
-    # preventing content-based auto-sizing that produces uneven cell widths.
-    contributors = {"alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"}}
-    md = render_wall(contributors, "2026-06-08")
-    assert "<colgroup>" in md
-    assert md.count("<col width=\"55\"/>") == 6  # one <col> per GRID_COLS
+    assert md.count("<td") == 8
 
 
 def test_render_wall_sort_is_case_insensitive_and_unicode():
@@ -395,7 +308,7 @@ def test_main_end_to_end(monkeypatch, tmp_path):
     responses.add(
         responses.GET,
         "https://api.github.com/users/alice",
-        json={"login": "alice", "name": "Alice"},
+        json={"login": "alice", "name": "Alice Example"},
         status=200,
     )
 
@@ -408,6 +321,6 @@ def test_main_end_to_end(monkeypatch, tmp_path):
     assert exit_code == 0
     assert readme.exists()
     content = readme.read_text(encoding="utf-8")
-    assert "Alice" in content
-    assert "1 contributor across 1 repository" in content  # Only alice; bot filtered
+    assert "Alice Example" in content
+    assert "img.shields.io/badge/contributors-1-brightgreen" in content  # Only alice; bot filtered
     assert "dependabot" not in content

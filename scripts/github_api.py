@@ -43,13 +43,17 @@ def _parse_next(link_header: str | None) -> str | None:
 
 
 def paginated_get(session: requests.Session, url: str, params: dict | None = None) -> list[Any]:
-    """GET a paginated GitHub endpoint, following Link rel=next, returning the flat list."""
+    """GET a paginated GitHub endpoint, following Link rel=next, returning the flat list.
+
+    Returns [] on 204 No Content (e.g. empty repo contributors)."""
     items: list[Any] = []
     next_url: str | None = url
     next_params = params
     while next_url:
         response = session.get(next_url, params=next_params, timeout=30)
         response.raise_for_status()
+        if response.status_code == 204 or not response.content:
+            return items
         page = response.json()
         if isinstance(page, list):
             items.extend(page)

@@ -17,3 +17,9 @@ def list_org_repos(session: requests.Session, org: str) -> list[dict[str, Any]]:
     url = f"{GITHUB_API}/orgs/{org}/repos"
     all_repos = paginated_get(session, url, params={"per_page": 100, "type": "all"})
     return [r for r in all_repos if not r["archived"] and r["name"] != ".github"]
+
+
+def fetch_repo_contributors(session: requests.Session, org: str, repo: str) -> list[dict[str, Any]]:
+    """Fetch contributors for a single repo. Returns [] for an empty repo (HTTP 204)."""
+    url = f"{GITHUB_API}/repos/{org}/{repo}/contributors"
+    return paginated_get(session, url, params={"per_page": 100, "anon": "false"})

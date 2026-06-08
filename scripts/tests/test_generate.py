@@ -177,14 +177,43 @@ def test_enrich_display_names_falls_back_to_login_when_empty_string():
     assert result["carol"]["name"] == "carol"
 
 
+@responses.activate
+def test_enrich_display_names_falls_back_on_404():
+    # Deleted GitHub account: users/{login} returns 404; we should not crash.
+    responses.add(
+        responses.GET,
+        "https://api.github.com/users/deleted_user",
+        status=404,
+    )
+    session = make_session("fake-token")
+    contributors = {"deleted_user": {"avatar_url": "https://x/d", "contributions": 1}}
+    result = enrich_display_names(session, contributors)
+    assert result["deleted_user"]["name"] == "deleted_user"
+
+
 from scripts.generate_wall_of_honour import render_wall
 
 
 def test_render_wall_empty():
     md = render_wall({}, "2026-06-08")
-    assert "Wall coming soon" in md or "0 people" in md
+    assert "supported and advanced the BHoM" in md
     assert "<!-- WALL:START -->" in md
     assert "<!-- WALL:END -->" in md
+    assert "<div align=\"center\">" in md
+    # Horizontal rule separates the wall from preceding README content
+    assert "\n---\n" in md
+
+
+def test_render_wall_includes_hr_separator():
+    contributors = {
+        "alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"},
+    }
+    md = render_wall(contributors, "2026-06-08")
+    # The hr appears between the start marker and the centered content
+    start_idx = md.index("<!-- WALL:START -->")
+    div_idx = md.index("<div align=\"center\">")
+    hr_idx = md.index("---")
+    assert start_idx < hr_idx < div_idx
 
 
 def test_render_wall_single_row():
@@ -193,19 +222,75 @@ def test_render_wall_single_row():
         "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob Sample"},
     }
     md = render_wall(contributors, "2026-06-08")
-    assert "2 people" in md
-    assert md.count("<tr>") == 1  # 2 cells fit in 1 row of 7
+    assert "2 contributors" in md
+    assert md.count("<tr>") == 1  # 2 cells fit in 1 row of 10
     assert "Alice Example" in md
     assert "Bob Sample" in md
     # Alphabetical: Alice before Bob
     assert md.index("Alice Example") < md.index("Bob Sample")
+    # Rounded avatars
+    assert "border-radius: 50%" in md
+    # Centered wrapper
+    assert "<div align=\"center\">" in md
+    # Empty padding cells fill row to GRID_COLS width
+    assert md.count("<td width=\"80\"></td>") == 8
+
+
+def test_render_wall_stats_with_repo_count():
+    contributors = {
+        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice Example"},
+        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob Sample"},
+    }
+    md = render_wall(contributors, "2026-06-08", repo_count=42)
+    assert "2 contributors across 42 repositories" in md
+
+
+def test_render_wall_pluralization_singular():
+    contributors = {
+        "solo": {"avatar_url": "https://x/s", "contributions": 1, "name": "Solo Dev"},
+    }
+    md = render_wall(contributors, "2026-06-08", repo_count=1)
+    assert "1 contributor across 1 repository" in md
+    assert "1 contributors" not in md
+    assert "1 repositories" not in md
 
 
 def test_render_wall_two_rows_with_remainder():
-    contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(8)}
+    contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(11)}
     md = render_wall(contributors, "2026-06-08")
     assert md.count("<tr>") == 2
-    assert md.count("<td") == 8
+    # 11 populated cells (links present) + 9 empty padding cells in the second row
+    assert md.count("<a href") == 11
+    assert md.count("<td width=\"80\"></td>") == 9
+
+
+def test_render_wall_truncates_long_names_with_ellipsis():
+    contributors = {
+        "mocklongname": {"avatar_url": "https://x/m", "contributions": 1, "name": "A Very Long Display Name"},
+    }
+    md = render_wall(contributors, "2026-06-08")
+    # Display in <sub> is truncated
+    assert "A Very Long Display Name</b></sub>" not in md
+    assert "…</b></sub>" in md
+    # GitHub login (with @ prefix) is exposed via the title attribute for hover
+    assert "title=\"@mocklongname\"" in md
+    assert "title=\"A Very Long Display Name\"" not in md
+
+
+def test_render_wall_keeps_short_names_intact():
+    contributors = {
+        "alice": {"avatar_url": "https://x/a", "contributions": 1, "name": "Alice"},
+    }
+    md = render_wall(contributors, "2026-06-08")
+    assert "<sub><b>Alice</b></sub>" in md
+    assert "…" not in md  # no ellipsis anywhere
+
+
+def test_render_wall_uses_valign_top():
+    # valign="top" keeps avatars aligned even when names wrap to two lines
+    contributors = {"alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"}}
+    md = render_wall(contributors, "2026-06-08")
+    assert "valign=\"top\"" in md
 
 
 def test_render_wall_sort_is_case_insensitive_and_unicode():
@@ -315,5 +400,5 @@ def test_main_end_to_end(monkeypatch, tmp_path):
     assert readme.exists()
     content = readme.read_text(encoding="utf-8")
     assert "Alice Example" in content
-    assert "1 people" in content  # Only alice; bot filtered
+    assert "1 contributor across 1 repository" in content  # Only alice; bot filtered
     assert "dependabot" not in content

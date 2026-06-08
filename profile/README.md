@@ -23,7 +23,7 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
 <!-- WALL:START -->
 ## Wall of Honour
 
-Wall coming soon — first refresh runs on the 1st of next month.
+Wall coming soon. First refresh runs on the 1st of next month.
 
-_Last updated: never_
+Last updated: never
 <!-- WALL:END -->

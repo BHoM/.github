@@ -76,8 +76,8 @@ def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> s
         return (
             "<!-- WALL:START -->\n"
             "## Wall of Honour\n\n"
-            "Wall coming soon — no contributors yet.\n\n"
-            f"_Last updated: {last_updated}_\n"
+            "Wall coming soon. No contributors yet.\n\n"
+            f"Last updated: {last_updated}\n"
             "<!-- WALL:END -->"
         )
 
@@ -95,11 +95,11 @@ def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> s
     return (
         "<!-- WALL:START -->\n"
         "## Wall of Honour\n\n"
-        f"Thank you to the **{len(contributors)} people** who have contributed to BHoM.\n\n"
+        f"{len(contributors)} people have contributed to BHoM.\n\n"
         "<table>\n"
         + "\n".join(rows)
         + "\n</table>\n\n"
-        f"_Last updated: {last_updated}_\n"
+        f"Last updated: {last_updated}\n"
         "<!-- WALL:END -->"
     )
 
@@ -144,7 +144,7 @@ def splice_into_readme(readme_path: str, new_wall: str) -> bool:
     if _WALL_BLOCK_RE.search(current):
         updated = _WALL_BLOCK_RE.sub(lambda _: new_wall, current)
     else:
-        # No markers — append the wall after existing content
+        # No markers found; append the wall after existing content
         sep = "" if current.endswith("\n") else "\n"
         updated = current + sep + "\n" + new_wall + "\n"
 

@@ -36,5 +36,5 @@ jobs:
             git commit -m "chore(wall): refresh wall of honour"
             git push
           else
-            echo "No changes — wall is already current."
+            echo "No changes; wall is already current."
           fi

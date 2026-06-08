@@ -145,3 +145,48 @@ def test_enrich_display_names_falls_back_to_login_when_empty_string():
     contributors = {"carol": {"avatar_url": "https://x/c", "contributions": 1}}
     result = enrich_display_names(session, contributors)
     assert result["carol"]["name"] == "carol"
+
+
+from scripts.generate_wall_of_honour import render_wall
+
+
+def test_render_wall_empty():
+    md = render_wall({}, "2026-06-08")
+    assert "Wall coming soon" in md or "0 people" in md
+    assert "<!-- WALL:START -->" in md
+    assert "<!-- WALL:END -->" in md
+
+
+def test_render_wall_single_row():
+    contributors = {
+        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice Example"},
+        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob Sample"},
+    }
+    md = render_wall(contributors, "2026-06-08")
+    assert "2 people" in md
+    assert md.count("<tr>") == 1  # 2 cells fit in 1 row of 7
+    assert "Alice Example" in md
+    assert "Bob Sample" in md
+    # Alphabetical: Alice before Bob
+    assert md.index("Alice Example") < md.index("Bob Sample")
+
+
+def test_render_wall_two_rows_with_remainder():
+    contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(8)}
+    md = render_wall(contributors, "2026-06-08")
+    assert md.count("<tr>") == 2
+    assert md.count("<td") == 8
+
+
+def test_render_wall_sort_is_case_insensitive_and_unicode():
+    contributors = {
+        "zoe": {"avatar_url": "z", "contributions": 1, "name": "Zoe"},
+        "Anna": {"avatar_url": "a", "contributions": 1, "name": "Anna"},
+        "alex": {"avatar_url": "al", "contributions": 1, "name": "alex"},
+        "ångström": {"avatar_url": "ang", "contributions": 1, "name": "Ångström"},
+    }
+    md = render_wall(contributors, "2026-06-08")
+    names_in_order = []
+    for name in ["alex", "Anna", "Ångström", "Zoe"]:
+        names_in_order.append(md.index(name))
+    assert names_in_order == sorted(names_in_order)

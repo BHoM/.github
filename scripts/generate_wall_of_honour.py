@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import sys
+import unicodedata
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -62,3 +63,53 @@ def enrich_display_names(
         name = (user.get("name") or "").strip()
         info["name"] = name if name else login
     return contributors
+
+
+GRID_COLS = 7
+AVATAR_SIZE = 100
+
+
+def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> str:
+    """Render the markdown block (markers included) for the wall."""
+    if not contributors:
+        return (
+            "<!-- WALL:START -->\n"
+            "## Wall of Honour\n\n"
+            "Wall coming soon — no contributors yet.\n\n"
+            f"_Last updated: {last_updated}_\n"
+            "<!-- WALL:END -->"
+        )
+
+    sorted_logins = sorted(
+        contributors.keys(),
+        key=lambda login: unicodedata.normalize("NFD", contributors[login]["name"].casefold()),
+    )
+
+    rows: list[str] = []
+    for row_start in range(0, len(sorted_logins), GRID_COLS):
+        row_logins = sorted_logins[row_start:row_start + GRID_COLS]
+        cells = [_render_cell(login, contributors[login]) for login in row_logins]
+        rows.append("  <tr>\n" + "\n".join(cells) + "\n  </tr>")
+
+    return (
+        "<!-- WALL:START -->\n"
+        "## Wall of Honour\n\n"
+        f"Thank you to the **{len(contributors)} people** who have contributed to BHoM.\n\n"
+        "<table>\n"
+        + "\n".join(rows)
+        + "\n</table>\n\n"
+        f"_Last updated: {last_updated}_\n"
+        "<!-- WALL:END -->"
+    )
+
+
+def _render_cell(login: str, info: dict[str, Any]) -> str:
+    name = info["name"]
+    return (
+        "    <td align=\"center\">\n"
+        f"      <a href=\"https://github.com/{login}\">"
+        f"<img src=\"https://github.com/{login}.png?size={AVATAR_SIZE}\" "
+        f"width=\"{AVATAR_SIZE}\" height=\"{AVATAR_SIZE}\" /><br/>"
+        f"<sub><b>{name}</b></sub></a>\n"
+        "    </td>"
+    )

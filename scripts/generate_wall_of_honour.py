@@ -152,3 +152,44 @@ def splice_into_readme(readme_path: str, new_wall: str) -> bool:
         return False
     path.write_text(updated, encoding="utf-8")
     return True
+
+
+DEFAULT_README_PATH = "profile/README.md"
+
+
+def main() -> int:
+    """Entrypoint. Returns exit code."""
+    token = os.environ["GITHUB_TOKEN"]
+    org = os.environ.get("GITHUB_ORG", "BHoM")
+    readme_path = os.environ.get("README_PATH", DEFAULT_README_PATH)
+
+    session = make_session(token)
+
+    print(f"Listing repos in {org}...")
+    repos = list_org_repos(session, org)
+    print(f"Found {len(repos)} non-archived repos.")
+
+    per_repo: list[list[dict[str, Any]]] = []
+    for repo in repos:
+        contributors = fetch_repo_contributors(session, org, repo["name"])
+        human = filter_bots(contributors)
+        print(f"  {repo['name']}: {len(human)} human contributors")
+        per_repo.append(human)
+
+    aggregated = aggregate_contributors(per_repo)
+    print(f"Aggregated to {len(aggregated)} unique contributors. Enriching display names...")
+
+    enriched = enrich_display_names(session, aggregated)
+    today = date.today().isoformat()
+    wall_md = render_wall(enriched, today)
+
+    changed = splice_into_readme(readme_path, wall_md)
+    if changed:
+        print("README updated.")
+    else:
+        print("README unchanged.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

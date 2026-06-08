@@ -246,3 +246,47 @@ def test_splice_idempotent_no_change():
         readme.write_text(f"# BHoM\n\n{block}\n", encoding="utf-8")
         changed = splice_into_readme(str(readme), block)
         assert changed is False
+
+
+from scripts.generate_wall_of_honour import main
+
+
+@responses.activate
+def test_main_end_to_end(monkeypatch, tmp_path):
+    # Mock org repos
+    responses.add(
+        responses.GET,
+        "https://api.github.com/orgs/BHoM/repos",
+        json=[{"name": "BHoM_Engine", "archived": False}],
+        status=200,
+    )
+    # Mock contributors
+    responses.add(
+        responses.GET,
+        "https://api.github.com/repos/BHoM/BHoM_Engine/contributors",
+        json=[
+            {"login": "alice", "type": "User", "avatar_url": "https://x/a", "contributions": 10},
+            {"login": "dependabot[bot]", "type": "Bot", "avatar_url": "https://x/d", "contributions": 3},
+        ],
+        status=200,
+    )
+    # Mock user details
+    responses.add(
+        responses.GET,
+        "https://api.github.com/users/alice",
+        json={"login": "alice", "name": "Alice Example"},
+        status=200,
+    )
+
+    readme = tmp_path / "profile" / "README.md"
+    monkeypatch.setenv("GITHUB_TOKEN", "fake-token")
+    monkeypatch.setenv("GITHUB_ORG", "BHoM")
+    monkeypatch.setenv("README_PATH", str(readme))
+
+    exit_code = main()
+    assert exit_code == 0
+    assert readme.exists()
+    content = readme.read_text(encoding="utf-8")
+    assert "Alice Example" in content
+    assert "1 people" in content  # Only alice; bot filtered
+    assert "dependabot" not in content

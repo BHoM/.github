@@ -293,6 +293,15 @@ def test_render_wall_uses_valign_top():
     assert "valign=\"top\"" in md
 
 
+def test_render_wall_uses_colgroup_for_uniform_column_widths():
+    # colgroup gives GitHub's table renderer authoritative column widths,
+    # preventing content-based auto-sizing that produces uneven cell widths.
+    contributors = {"alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"}}
+    md = render_wall(contributors, "2026-06-08")
+    assert "<colgroup>" in md
+    assert md.count("<col width=\"55\"/>") == 12  # one <col> per GRID_COLS
+
+
 def test_render_wall_sort_is_case_insensitive_and_unicode():
     contributors = {
         "zoe": {"avatar_url": "z", "contributions": 1, "name": "Zoe"},

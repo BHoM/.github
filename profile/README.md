@@ -20,3 +20,10 @@ We also have a space for questions and discussions: https://github.com/orgs/BHoM
 
 Please let us know how can we improve it! Please raise GitHub Issues in the [Documentation repo](https://github.com/BHoM/documentation/issues) or start a [Discussion](https://github.com/orgs/BHoM/discussions).
 
+<!-- WALL:START -->
+## Wall of Honour
+
+Wall coming soon — first refresh runs on the 1st of next month.
+
+_Last updated: never_
+<!-- WALL:END -->

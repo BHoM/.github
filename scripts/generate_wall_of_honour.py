@@ -96,7 +96,7 @@ def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> s
     if not contributors:
         return (
             "<!-- WALL:START -->\n"
-            "## Wall of Honour\n\n"
+            "## Our Contributors\n\n"
             f"{badge}\n\n"
             "Wall coming soon. No contributors yet.\n\n"
             f"_Last updated: {last_updated}_\n"
@@ -116,7 +116,7 @@ def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> s
 
     return (
         "<!-- WALL:START -->\n"
-        "## Wall of Honour\n\n"
+        "## Our Contributors\n\n"
         f"{badge}\n\n"
         "<table>\n"
         + "\n".join(rows)

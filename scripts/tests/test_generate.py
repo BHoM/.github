@@ -1,3 +1,6 @@
+import tempfile
+from pathlib import Path
+
 import responses
 from scripts.generate_wall_of_honour import fetch_repo_contributors, list_org_repos, filter_bots, aggregate_contributors, enrich_display_names
 from scripts.github_api import make_session
@@ -190,3 +193,56 @@ def test_render_wall_sort_is_case_insensitive_and_unicode():
     for name in ["alex", "Anna", "Ångström", "Zoe"]:
         names_in_order.append(md.index(name))
     assert names_in_order == sorted(names_in_order)
+
+
+from scripts.generate_wall_of_honour import splice_into_readme
+
+
+def test_splice_preserves_surrounding_content():
+    with tempfile.TemporaryDirectory() as tmp:
+        readme = Path(tmp) / "README.md"
+        readme.write_text(
+            "# BHoM\n\nIntro paragraph.\n\n"
+            "<!-- WALL:START -->\nOLD WALL\n<!-- WALL:END -->\n\n"
+            "Footer content.\n",
+            encoding="utf-8",
+        )
+        new_wall = "<!-- WALL:START -->\nNEW WALL\n<!-- WALL:END -->"
+        changed = splice_into_readme(str(readme), new_wall)
+        assert changed is True
+        content = readme.read_text(encoding="utf-8")
+        assert "Intro paragraph." in content
+        assert "Footer content." in content
+        assert "NEW WALL" in content
+        assert "OLD WALL" not in content
+
+
+def test_splice_bootstraps_when_markers_absent():
+    with tempfile.TemporaryDirectory() as tmp:
+        readme = Path(tmp) / "README.md"
+        readme.write_text("# BHoM\n\nIntro only.\n", encoding="utf-8")
+        new_wall = "<!-- WALL:START -->\nNEW WALL\n<!-- WALL:END -->"
+        changed = splice_into_readme(str(readme), new_wall)
+        assert changed is True
+        content = readme.read_text(encoding="utf-8")
+        assert "Intro only." in content
+        assert "NEW WALL" in content
+
+
+def test_splice_creates_file_when_missing():
+    with tempfile.TemporaryDirectory() as tmp:
+        readme = Path(tmp) / "README.md"
+        new_wall = "<!-- WALL:START -->\nFRESH\n<!-- WALL:END -->"
+        changed = splice_into_readme(str(readme), new_wall)
+        assert changed is True
+        assert readme.exists()
+        assert "FRESH" in readme.read_text(encoding="utf-8")
+
+
+def test_splice_idempotent_no_change():
+    with tempfile.TemporaryDirectory() as tmp:
+        readme = Path(tmp) / "README.md"
+        block = "<!-- WALL:START -->\nSAME\n<!-- WALL:END -->"
+        readme.write_text(f"# BHoM\n\n{block}\n", encoding="utf-8")
+        changed = splice_into_readme(str(readme), block)
+        assert changed is False

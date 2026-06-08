@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import re
 import sys
 import unicodedata
 from datetime import date
@@ -113,3 +114,41 @@ def _render_cell(login: str, info: dict[str, Any]) -> str:
         f"<sub><b>{name}</b></sub></a>\n"
         "    </td>"
     )
+
+
+WALL_MARKER_START = "<!-- WALL:START -->"
+WALL_MARKER_END = "<!-- WALL:END -->"
+_WALL_BLOCK_RE = re.compile(
+    re.escape(WALL_MARKER_START) + r".*?" + re.escape(WALL_MARKER_END),
+    re.DOTALL,
+)
+
+BOOTSTRAP_TEMPLATE = """# BHoM
+
+The BHoM (Buildings and Habitats object Model) is an open-source AEC framework.
+
+{wall}
+"""
+
+
+def splice_into_readme(readme_path: str, new_wall: str) -> bool:
+    """Replace wall block in README with `new_wall`. Returns True if file changed."""
+    path = Path(readme_path)
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        new_content = BOOTSTRAP_TEMPLATE.format(wall=new_wall)
+        path.write_text(new_content, encoding="utf-8")
+        return True
+
+    current = path.read_text(encoding="utf-8")
+    if _WALL_BLOCK_RE.search(current):
+        updated = _WALL_BLOCK_RE.sub(lambda _: new_wall, current)
+    else:
+        # No markers — append the wall after existing content
+        sep = "" if current.endswith("\n") else "\n"
+        updated = current + sep + "\n" + new_wall + "\n"
+
+    if updated == current:
+        return False
+    path.write_text(updated, encoding="utf-8")
+    return True

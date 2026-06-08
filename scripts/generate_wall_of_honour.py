@@ -87,7 +87,7 @@ def enrich_display_names(
     return contributors
 
 
-GRID_COLS = 12
+GRID_COLS = 6
 AVATAR_SIZE = 45
 CELL_WIDTH = 55
 NAME_MAX_LEN = 12  # truncate longer display names with an ellipsis; full name in title attr

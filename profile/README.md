@@ -29,6 +29,14 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
 Contributors who have supported and advanced the BHoM.
 
 <table cellpadding="4" cellspacing="0">
+  <colgroup>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+  </colgroup>
   <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/polnischfrosch" title="@polnischfrosch"><img src="https://github.com/polnischfrosch.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>AaronWagner</b></sub></a>
@@ -48,6 +56,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/al-fisher" title="@al-fisher"><img src="https://github.com/al-fisher.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Al Fisher</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/AlaaAlfakara" title="@AlaaAlfakara"><img src="https://github.com/AlaaAlfakara.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Alaa Alfaka…</b></sub></a>
     </td>
@@ -86,6 +96,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/Arne-Martensen" title="@Arne-Martensen"><img src="https://github.com/Arne-Martensen.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Arne Marten…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/arvidsigurdsson" title="@arvidsigurdsson"><img src="https://github.com/arvidsigurdsson.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Arvid Sigur…</b></sub></a>
     </td>
@@ -124,6 +136,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/DanielJonssonBH" title="@DanielJonssonBH"><img src="https://github.com/DanielJonssonBH.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Daniel Jons…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/DarienC" title="@DarienC"><img src="https://github.com/DarienC.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>DarienC</b></sub></a>
     </td>
@@ -162,6 +176,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/EKAdebo" title="@EKAdebo"><img src="https://github.com/EKAdebo.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Ellie Adebo…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/emilsvedjer" title="@emilsvedjer"><img src="https://github.com/emilsvedjer.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Emil Svedjer</b></sub></a>
     </td>
@@ -200,6 +216,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/geirsoderin" title="@geirsoderin"><img src="https://github.com/geirsoderin.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Geir Soderin</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/gideontamir16" title="@gideontamir16"><img src="https://github.com/gideontamir16.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Gideon Tamir</b></sub></a>
     </td>
@@ -238,6 +256,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/johannaisak" title="@johannaisak"><img src="https://github.com/johannaisak.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Johanna Isa…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/JohannaOlin1" title="@JohannaOlin1"><img src="https://github.com/JohannaOlin1.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Johanna Olin</b></sub></a>
     </td>
@@ -276,6 +296,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/kprusicka" title="@kprusicka"><img src="https://github.com/kprusicka.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Karolina Pr…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/Kar-Myl" title="@Kar-Myl"><img src="https://github.com/Kar-Myl.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Kartheek My…</b></sub></a>
     </td>
@@ -314,6 +336,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/fraguada" title="@fraguada"><img src="https://github.com/fraguada.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Luis E. Fra…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/msandmer" title="@msandmer"><img src="https://github.com/msandmer.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Madelene Sa…</b></sub></a>
     </td>
@@ -352,6 +376,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/MatildaSvenssonBH" title="@MatildaSvenssonBH"><img src="https://github.com/MatildaSvenssonBH.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Matilda Sve…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/teocomi" title="@teocomi"><img src="https://github.com/teocomi.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Matteo Comi…</b></sub></a>
     </td>
@@ -390,6 +416,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/ncbrown2" title="@ncbrown2"><img src="https://github.com/ncbrown2.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Nathan Brown</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/Nazeefa710" title="@Nazeefa710"><img src="https://github.com/Nazeefa710.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Nazeefa Bus…</b></sub></a>
     </td>
@@ -428,6 +456,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/peterjamesnugent" title="@peterjamesnugent"><img src="https://github.com/peterjamesnugent.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Peter Nugent</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/PiotrBuda" title="@PiotrBuda"><img src="https://github.com/PiotrBuda.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>PiotrBuda</b></sub></a>
     </td>
@@ -466,6 +496,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/svaz00" title="@svaz00"><img src="https://github.com/svaz00.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Sam Vazquez</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/samuelbasimalla" title="@samuelbasimalla"><img src="https://github.com/samuelbasimalla.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Samuel Basi…</b></sub></a>
     </td>
@@ -504,6 +536,8 @@ Contributors who have supported and advanced the BHoM.
     <td align="center" valign="top" width="55">
       <a href="https://github.com/WojciechBuda00" title="@WojciechBuda00"><img src="https://github.com/WojciechBuda00.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>wojciech bu…</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/LMarkowski" title="@LMarkowski"><img src="https://github.com/LMarkowski.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>Łukasz Mark…</b></sub></a>
     </td>

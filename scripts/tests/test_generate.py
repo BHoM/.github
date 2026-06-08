@@ -233,7 +233,7 @@ def test_render_wall_single_row():
     # Centered wrapper
     assert "<div align=\"center\">" in md
     # Empty padding cells fill row to GRID_COLS width
-    assert md.count("<td width=\"55\"></td>") == 10
+    assert md.count("<td width=\"55\"></td>") == 4
 
 
 def test_render_wall_stats_with_repo_count():
@@ -256,12 +256,12 @@ def test_render_wall_pluralization_singular():
 
 
 def test_render_wall_two_rows_with_remainder():
-    contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(14)}
+    contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(8)}
     md = render_wall(contributors, "2026-06-08")
     assert md.count("<tr>") == 2
-    # 14 populated cells (links present) + 10 empty padding cells in the second row
-    assert md.count("<a href") == 14
-    assert md.count("<td width=\"55\"></td>") == 10
+    # 8 populated cells (links present) + 4 empty padding cells in the second row
+    assert md.count("<a href") == 8
+    assert md.count("<td width=\"55\"></td>") == 4
 
 
 def test_render_wall_truncates_long_names_with_ellipsis():
@@ -291,6 +291,15 @@ def test_render_wall_uses_valign_top():
     contributors = {"alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"}}
     md = render_wall(contributors, "2026-06-08")
     assert "valign=\"top\"" in md
+
+
+def test_render_wall_uses_colgroup_for_uniform_column_widths():
+    # colgroup gives GitHub's table renderer authoritative column widths,
+    # preventing content-based auto-sizing that produces uneven cell widths.
+    contributors = {"alice": {"avatar_url": "x", "contributions": 1, "name": "Alice"}}
+    md = render_wall(contributors, "2026-06-08")
+    assert "<colgroup>" in md
+    assert md.count("<col width=\"55\"/>") == 6  # one <col> per GRID_COLS
 
 
 def test_render_wall_sort_is_case_insensitive_and_unicode():

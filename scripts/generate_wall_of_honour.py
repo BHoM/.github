@@ -87,7 +87,7 @@ def enrich_display_names(
     return contributors
 
 
-GRID_COLS = 12
+GRID_COLS = 6
 AVATAR_SIZE = 45
 CELL_WIDTH = 55
 NAME_MAX_LEN = 12  # truncate longer display names with an ellipsis; full name in title attr
@@ -138,12 +138,16 @@ def render_wall(
     else:
         stats = f"{contributors_part}. Last updated {last_updated}."
 
+    colgroup_lines = "\n".join(f"    <col width=\"{CELL_WIDTH}\"/>" for _ in range(GRID_COLS))
+    colgroup = "  <colgroup>\n" + colgroup_lines + "\n  </colgroup>"
+
     return (
         "<!-- WALL:START -->\n\n"
         "---\n\n"
         "<div align=\"center\">\n\n"
         f"{INTRO_TEXT}\n\n"
         "<table cellpadding=\"4\" cellspacing=\"0\">\n"
+        + colgroup + "\n"
         + "\n".join(rows)
         + "\n</table>\n\n"
         f"{stats}\n\n"

@@ -1,7 +1,6 @@
 """Generate BHoM Wall of Honour and splice into profile/README.md."""
 from __future__ import annotations
 
-import html
 import os
 import re
 import sys
@@ -73,47 +72,34 @@ def enrich_display_names(
     session: requests.Session,
     contributors: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
-    """Fetch each contributor's display name; fall back to login when blank or unavailable.
-
-    Handles 404s gracefully (e.g. deleted GitHub accounts) by using the login as the name.
-    """
+    """Fetch each contributor's display name; fall back to login when blank."""
     for login, info in contributors.items():
-        try:
-            user = get_one(session, f"{GITHUB_API}/users/{login}")
-            name = (user.get("name") or "").strip()
-        except requests.HTTPError:
-            name = ""
+        user = get_one(session, f"{GITHUB_API}/users/{login}")
+        name = (user.get("name") or "").strip()
         info["name"] = name if name else login
     return contributors
 
 
-GRID_COLS = 6
-AVATAR_SIZE = 45
-CELL_WIDTH = 55
-NAME_MAX_LEN = 12  # truncate longer display names with an ellipsis; full name in title attr
+GRID_COLS = 7
+AVATAR_SIZE = 100
 
 
-def _pluralize(n: int, singular: str, plural: str) -> str:
-    return f"{n} {singular if n == 1 else plural}"
+def _contributors_badge(count: int) -> str:
+    color = "lightgrey" if count == 0 else "brightgreen"
+    return f"![Contributors](https://img.shields.io/badge/contributors-{count}-{color})"
 
 
-INTRO_TEXT = "Contributors who have supported and advanced the BHoM."
-
-
-def render_wall(
-    contributors: dict[str, dict[str, Any]],
-    last_updated: str,
-    repo_count: int | None = None,
-) -> str:
+def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> str:
     """Render the markdown block (markers included) for the wall."""
+    badge = _contributors_badge(len(contributors))
+
     if not contributors:
         return (
-            "<!-- WALL:START -->\n\n"
-            "---\n\n"
-            "<div align=\"center\">\n\n"
-            f"{INTRO_TEXT}\n\n"
-            f"_(No contributors yet. Last updated {last_updated}.)_\n\n"
-            "</div>\n"
+            "<!-- WALL:START -->\n"
+            "## Wall of Honour\n\n"
+            f"{badge}\n\n"
+            "Wall coming soon. No contributors yet.\n\n"
+            f"_Last updated: {last_updated}_\n"
             "<!-- WALL:END -->"
         )
 
@@ -123,56 +109,31 @@ def render_wall(
     )
 
     rows: list[str] = []
-    empty_cell = f"    <td width=\"{CELL_WIDTH}\"></td>"
     for row_start in range(0, len(sorted_logins), GRID_COLS):
         row_logins = sorted_logins[row_start:row_start + GRID_COLS]
         cells = [_render_cell(login, contributors[login]) for login in row_logins]
-        while len(cells) < GRID_COLS:
-            cells.append(empty_cell)
         rows.append("  <tr>\n" + "\n".join(cells) + "\n  </tr>")
 
-    contributors_part = _pluralize(len(contributors), "contributor", "contributors")
-    if repo_count is not None:
-        repos_part = _pluralize(repo_count, "repository", "repositories")
-        stats = f"{contributors_part} across {repos_part}. Last updated {last_updated}."
-    else:
-        stats = f"{contributors_part}. Last updated {last_updated}."
-
-    colgroup_lines = "\n".join(f"    <col width=\"{CELL_WIDTH}\"/>" for _ in range(GRID_COLS))
-    colgroup = "  <colgroup>\n" + colgroup_lines + "\n  </colgroup>"
-
     return (
-        "<!-- WALL:START -->\n\n"
-        "---\n\n"
-        "<div align=\"center\">\n\n"
-        f"{INTRO_TEXT}\n\n"
-        "<table cellpadding=\"4\" cellspacing=\"0\">\n"
-        + colgroup + "\n"
+        "<!-- WALL:START -->\n"
+        "## Wall of Honour\n\n"
+        f"{badge}\n\n"
+        "<table>\n"
         + "\n".join(rows)
         + "\n</table>\n\n"
-        f"{stats}\n\n"
-        "</div>\n"
+        f"_Last updated: {last_updated}_\n"
         "<!-- WALL:END -->"
     )
 
 
-def _truncate_name(name: str, max_len: int = NAME_MAX_LEN) -> str:
-    """Trim to max_len visible characters, appending an ellipsis if shortened."""
-    if len(name) <= max_len:
-        return name
-    return name[: max_len - 1].rstrip() + "…"
-
-
 def _render_cell(login: str, info: dict[str, Any]) -> str:
-    full_name = info["name"]
-    display = html.escape(_truncate_name(full_name))
+    name = info["name"]
     return (
-        f"    <td align=\"center\" valign=\"top\" width=\"{CELL_WIDTH}\">\n"
-        f"      <a href=\"https://github.com/{login}\" title=\"@{login}\">"
+        "    <td align=\"center\">\n"
+        f"      <a href=\"https://github.com/{login}\">"
         f"<img src=\"https://github.com/{login}.png?size={AVATAR_SIZE}\" "
-        f"width=\"{AVATAR_SIZE}\" height=\"{AVATAR_SIZE}\" "
-        f"style=\"border-radius: 50%\" /><br/>"
-        f"<sub><b>{display}</b></sub></a>\n"
+        f"width=\"{AVATAR_SIZE}\" height=\"{AVATAR_SIZE}\" /><br/>"
+        f"<sub><b>{name}</b></sub></a>\n"
         "    </td>"
     )
 
@@ -242,7 +203,7 @@ def main() -> int:
 
     enriched = enrich_display_names(session, aggregated)
     today = date.today().isoformat()
-    wall_md = render_wall(enriched, today, repo_count=len(repos))
+    wall_md = render_wall(enriched, today)
 
     changed = splice_into_readme(readme_path, wall_md)
     if changed:

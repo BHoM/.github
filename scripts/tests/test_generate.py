@@ -140,13 +140,13 @@ def test_enrich_display_names_uses_real_name():
     responses.add(
         responses.GET,
         "https://api.github.com/users/alice",
-        json={"login": "alice", "name": "Alice Example"},
+        json={"login": "alice", "name": "Alice"},
         status=200,
     )
     session = make_session("fake-token")
     contributors = {"alice": {"avatar_url": "https://x/a", "contributions": 10}}
     result = enrich_display_names(session, contributors)
-    assert result["alice"]["name"] == "Alice Example"
+    assert result["alice"]["name"] == "Alice"
 
 
 @responses.activate
@@ -218,28 +218,28 @@ def test_render_wall_includes_hr_separator():
 
 def test_render_wall_single_row():
     contributors = {
-        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice Example"},
-        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob Sample"},
+        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice"},
+        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob"},
     }
     md = render_wall(contributors, "2026-06-08")
     assert "2 contributors" in md
-    assert md.count("<tr>") == 1  # 2 cells fit in 1 row of 10
-    assert "Alice Example" in md
-    assert "Bob Sample" in md
+    assert md.count("<tr>") == 1  # 2 cells fit in 1 row of GRID_COLS
+    assert "Alice" in md
+    assert "Bob" in md
     # Alphabetical: Alice before Bob
-    assert md.index("Alice Example") < md.index("Bob Sample")
+    assert md.index("Alice") < md.index("Bob")
     # Rounded avatars
     assert "border-radius: 50%" in md
     # Centered wrapper
     assert "<div align=\"center\">" in md
     # Empty padding cells fill row to GRID_COLS width
-    assert md.count("<td width=\"80\"></td>") == 8
+    assert md.count("<td width=\"55\"></td>") == 10
 
 
 def test_render_wall_stats_with_repo_count():
     contributors = {
-        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice Example"},
-        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob Sample"},
+        "alice": {"avatar_url": "https://x/a", "contributions": 10, "name": "Alice"},
+        "bob": {"avatar_url": "https://x/b", "contributions": 5, "name": "Bob"},
     }
     md = render_wall(contributors, "2026-06-08", repo_count=42)
     assert "2 contributors across 42 repositories" in md
@@ -256,12 +256,12 @@ def test_render_wall_pluralization_singular():
 
 
 def test_render_wall_two_rows_with_remainder():
-    contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(11)}
+    contributors = {f"user{i}": {"avatar_url": f"https://x/{i}", "contributions": 1, "name": f"User {i}"} for i in range(14)}
     md = render_wall(contributors, "2026-06-08")
     assert md.count("<tr>") == 2
-    # 11 populated cells (links present) + 9 empty padding cells in the second row
-    assert md.count("<a href") == 11
-    assert md.count("<td width=\"80\"></td>") == 9
+    # 14 populated cells (links present) + 10 empty padding cells in the second row
+    assert md.count("<a href") == 14
+    assert md.count("<td width=\"55\"></td>") == 10
 
 
 def test_render_wall_truncates_long_names_with_ellipsis():
@@ -386,7 +386,7 @@ def test_main_end_to_end(monkeypatch, tmp_path):
     responses.add(
         responses.GET,
         "https://api.github.com/users/alice",
-        json={"login": "alice", "name": "Alice Example"},
+        json={"login": "alice", "name": "Alice"},
         status=200,
     )
 
@@ -399,6 +399,6 @@ def test_main_end_to_end(monkeypatch, tmp_path):
     assert exit_code == 0
     assert readme.exists()
     content = readme.read_text(encoding="utf-8")
-    assert "Alice Example" in content
+    assert "Alice" in content
     assert "1 contributor across 1 repository" in content  # Only alice; bot filtered
     assert "dependabot" not in content

@@ -87,10 +87,10 @@ def enrich_display_names(
     return contributors
 
 
-GRID_COLS = 10
-AVATAR_SIZE = 70
-CELL_WIDTH = 80
-NAME_MAX_LEN = 15  # truncate longer display names with an ellipsis; full name in title attr
+GRID_COLS = 12
+AVATAR_SIZE = 45
+CELL_WIDTH = 55
+NAME_MAX_LEN = 12  # truncate longer display names with an ellipsis; full name in title attr
 
 
 def _pluralize(n: int, singular: str, plural: str) -> str:

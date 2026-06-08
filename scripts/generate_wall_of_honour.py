@@ -50,3 +50,15 @@ def aggregate_contributors(
             else:
                 existing["contributions"] += c["contributions"]
     return aggregated
+
+
+def enrich_display_names(
+    session: requests.Session,
+    contributors: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Fetch each contributor's display name; fall back to login when blank."""
+    for login, info in contributors.items():
+        user = get_one(session, f"{GITHUB_API}/users/{login}")
+        name = (user.get("name") or "").strip()
+        info["name"] = name if name else login
+    return contributors

@@ -1,5 +1,5 @@
 import responses
-from scripts.generate_wall_of_honour import fetch_repo_contributors, list_org_repos, filter_bots, aggregate_contributors
+from scripts.generate_wall_of_honour import fetch_repo_contributors, list_org_repos, filter_bots, aggregate_contributors, enrich_display_names
 from scripts.github_api import make_session
 
 
@@ -103,3 +103,45 @@ def test_aggregate_dedupes_and_sums_across_repos():
 def test_aggregate_empty_input():
     assert aggregate_contributors([]) == {}
     assert aggregate_contributors([[]]) == {}
+
+
+@responses.activate
+def test_enrich_display_names_uses_real_name():
+    responses.add(
+        responses.GET,
+        "https://api.github.com/users/alice",
+        json={"login": "alice", "name": "Alice Example"},
+        status=200,
+    )
+    session = make_session("fake-token")
+    contributors = {"alice": {"avatar_url": "https://x/a", "contributions": 10}}
+    result = enrich_display_names(session, contributors)
+    assert result["alice"]["name"] == "Alice Example"
+
+
+@responses.activate
+def test_enrich_display_names_falls_back_to_login_when_null():
+    responses.add(
+        responses.GET,
+        "https://api.github.com/users/bob",
+        json={"login": "bob", "name": None},
+        status=200,
+    )
+    session = make_session("fake-token")
+    contributors = {"bob": {"avatar_url": "https://x/b", "contributions": 5}}
+    result = enrich_display_names(session, contributors)
+    assert result["bob"]["name"] == "bob"
+
+
+@responses.activate
+def test_enrich_display_names_falls_back_to_login_when_empty_string():
+    responses.add(
+        responses.GET,
+        "https://api.github.com/users/carol",
+        json={"login": "carol", "name": "   "},  # whitespace only
+        status=200,
+    )
+    session = make_session("fake-token")
+    contributors = {"carol": {"avatar_url": "https://x/c", "contributions": 1}}
+    result = enrich_display_names(session, contributors)
+    assert result["carol"]["name"] == "carol"

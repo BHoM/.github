@@ -31,3 +31,22 @@ def filter_bots(contributors: list[dict[str, Any]]) -> list[dict[str, Any]]:
         c for c in contributors
         if c.get("type") != "Bot" and not c["login"].endswith("[bot]")
     ]
+
+
+def aggregate_contributors(
+    per_repo_lists: list[list[dict[str, Any]]],
+) -> dict[str, dict[str, Any]]:
+    """De-duplicate contributors by login, summing contributions across repos."""
+    aggregated: dict[str, dict[str, Any]] = {}
+    for contributors in per_repo_lists:
+        for c in contributors:
+            login = c["login"]
+            existing = aggregated.get(login)
+            if existing is None:
+                aggregated[login] = {
+                    "avatar_url": c["avatar_url"],
+                    "contributions": c["contributions"],
+                }
+            else:
+                existing["contributions"] += c["contributions"]
+    return aggregated

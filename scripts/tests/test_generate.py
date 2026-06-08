@@ -1,5 +1,5 @@
 import responses
-from scripts.generate_wall_of_honour import fetch_repo_contributors, list_org_repos, filter_bots
+from scripts.generate_wall_of_honour import fetch_repo_contributors, list_org_repos, filter_bots, aggregate_contributors
 from scripts.github_api import make_session
 
 
@@ -75,3 +75,31 @@ def test_filter_bots_keeps_all_humans():
         {"login": "bob", "type": "User"},
     ]
     assert filter_bots(raw) == raw
+
+
+def test_aggregate_single_repo():
+    per_repo = [[
+        {"login": "alice", "avatar_url": "https://x/a", "contributions": 10},
+    ]]
+    result = aggregate_contributors(per_repo)
+    assert result == {
+        "alice": {"avatar_url": "https://x/a", "contributions": 10}
+    }
+
+
+def test_aggregate_dedupes_and_sums_across_repos():
+    per_repo = [
+        [{"login": "alice", "avatar_url": "https://x/a", "contributions": 10}],
+        [{"login": "alice", "avatar_url": "https://x/a", "contributions": 5}],
+        [{"login": "bob", "avatar_url": "https://x/b", "contributions": 3}],
+    ]
+    result = aggregate_contributors(per_repo)
+    assert result == {
+        "alice": {"avatar_url": "https://x/a", "contributions": 15},
+        "bob": {"avatar_url": "https://x/b", "contributions": 3},
+    }
+
+
+def test_aggregate_empty_input():
+    assert aggregate_contributors([]) == {}
+    assert aggregate_contributors([[]]) == {}

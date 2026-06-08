@@ -29,6 +29,20 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
 Contributors who have supported and advanced the BHoM.
 
 <table cellpadding="4" cellspacing="0">
+  <colgroup>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+    <col width="55"/>
+  </colgroup>
   <tr>
     <td align="center" valign="top" width="55">
       <a href="https://github.com/polnischfrosch" title="@polnischfrosch"><img src="https://github.com/polnischfrosch.png?size=45" width="45" height="45" style="border-radius: 50%" /><br/><sub><b>AaronWagner</b></sub></a>

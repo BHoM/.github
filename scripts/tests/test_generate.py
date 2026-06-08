@@ -80,6 +80,33 @@ def test_filter_bots_keeps_all_humans():
     assert filter_bots(raw) == raw
 
 
+from scripts.generate_wall_of_honour import filter_denylist, DENYLISTED_LOGINS
+
+
+def test_filter_denylist_excludes_known_accounts():
+    raw = [
+        {"login": "alice", "type": "User"},
+        {"login": "BHoMBot", "type": "User"},
+        {"login": "BuroHappold1", "type": "User"},
+    ]
+    result = filter_denylist(raw)
+    assert result == [{"login": "alice", "type": "User"}]
+
+
+def test_filter_denylist_keeps_unrelated_logins():
+    raw = [
+        {"login": "alice", "type": "User"},
+        {"login": "bob", "type": "User"},
+    ]
+    assert filter_denylist(raw) == raw
+
+
+def test_denylist_constant_includes_known_accounts():
+    # Lock in the current denylist so accidental removal is caught by CI.
+    assert "BHoMBot" in DENYLISTED_LOGINS
+    assert "BuroHappold1" in DENYLISTED_LOGINS
+
+
 def test_aggregate_single_repo():
     per_repo = [[
         {"login": "alice", "avatar_url": "https://x/a", "contributions": 10},

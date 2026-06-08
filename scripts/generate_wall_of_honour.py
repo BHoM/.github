@@ -35,6 +35,20 @@ def filter_bots(contributors: list[dict[str, Any]]) -> list[dict[str, Any]]:
     ]
 
 
+# Logins to exclude from the wall: org automation accounts and shared admin
+# accounts that don't carry a [bot] suffix or type=Bot in the API.
+# Add new entries here if a future refresh surfaces another non-human.
+DENYLISTED_LOGINS = frozenset({
+    "BHoMBot",       # BHoM org automation bot
+    "BuroHappold1",  # shared "Administrator" account
+})
+
+
+def filter_denylist(contributors: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove contributors whose login is in DENYLISTED_LOGINS."""
+    return [c for c in contributors if c["login"] not in DENYLISTED_LOGINS]
+
+
 def aggregate_contributors(
     per_repo_lists: list[list[dict[str, Any]]],
 ) -> dict[str, dict[str, Any]]:
@@ -172,7 +186,7 @@ def main() -> int:
     per_repo: list[list[dict[str, Any]]] = []
     for repo in repos:
         contributors = fetch_repo_contributors(session, org, repo["name"])
-        human = filter_bots(contributors)
+        human = filter_denylist(filter_bots(contributors))
         print(f"  {repo['name']}: {len(human)} human contributors")
         per_repo.append(human)
 

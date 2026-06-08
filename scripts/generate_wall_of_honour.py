@@ -23,3 +23,11 @@ def fetch_repo_contributors(session: requests.Session, org: str, repo: str) -> l
     """Fetch contributors for a single repo. Returns [] for an empty repo (HTTP 204)."""
     url = f"{GITHUB_API}/repos/{org}/{repo}/contributors"
     return paginated_get(session, url, params={"per_page": 100, "anon": "false"})
+
+
+def filter_bots(contributors: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove bot accounts (type=Bot or login ending in [bot])."""
+    return [
+        c for c in contributors
+        if c.get("type") != "Bot" and not c["login"].endswith("[bot]")
+    ]

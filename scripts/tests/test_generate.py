@@ -1,5 +1,5 @@
 import responses
-from scripts.generate_wall_of_honour import fetch_repo_contributors, list_org_repos
+from scripts.generate_wall_of_honour import fetch_repo_contributors, list_org_repos, filter_bots
 from scripts.github_api import make_session
 
 
@@ -50,3 +50,28 @@ def test_fetch_repo_contributors_handles_204_empty():
     session = make_session("fake-token")
     result = fetch_repo_contributors(session, "BHoM", "empty_repo")
     assert result == []
+
+
+def test_filter_bots_excludes_type_bot():
+    raw = [
+        {"login": "alice", "type": "User"},
+        {"login": "dependabot[bot]", "type": "Bot"},
+    ]
+    assert filter_bots(raw) == [{"login": "alice", "type": "User"}]
+
+
+def test_filter_bots_excludes_bot_suffix_login_even_if_type_user():
+    # Some old bot accounts have type=User but [bot] suffix
+    raw = [
+        {"login": "alice", "type": "User"},
+        {"login": "old-tool[bot]", "type": "User"},
+    ]
+    assert filter_bots(raw) == [{"login": "alice", "type": "User"}]
+
+
+def test_filter_bots_keeps_all_humans():
+    raw = [
+        {"login": "alice", "type": "User"},
+        {"login": "bob", "type": "User"},
+    ]
+    assert filter_bots(raw) == raw

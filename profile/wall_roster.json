@@ -1,0 +1,455 @@
+{
+  "AhmadSater": {
+    "name": "Ahmad Sater"
+  },
+  "AhmedElnagar1": {
+    "name": "Ahmed Elnagar"
+  },
+  "AlaaAlfakara": {
+    "name": "Alaa Alfakara"
+  },
+  "Arne-Martensen": {
+    "name": "Arne Martensen"
+  },
+  "BingWangUS": {
+    "name": "Bing Wang"
+  },
+  "CKBoulter": {
+    "name": "Courtney Boulter"
+  },
+  "ChrisSelf2": {
+    "name": "Chris Self"
+  },
+  "Chrisshort92": {
+    "name": "Christopher Short"
+  },
+  "Clemens-Preisinger": {
+    "name": "Clemens Preisinger"
+  },
+  "Conor-Hubert-BH": {
+    "name": "Conor Hubert"
+  },
+  "DanielJonssonBH": {
+    "name": "Daniel Jonsson"
+  },
+  "DarienC": {
+    "name": "DarienC"
+  },
+  "DiellzaElshani": {
+    "name": "DiellzaElshani"
+  },
+  "Dmamedova": {
+    "name": "Djamila Mamedova"
+  },
+  "EKAdebo": {
+    "name": "Ellie Adebowale"
+  },
+  "EddyDalton": {
+    "name": "Eddy Dalton"
+  },
+  "EmmaSander": {
+    "name": "Emma Sander"
+  },
+  "EnricoAntolini": {
+    "name": "EnricoAntolini"
+  },
+  "Erida-Bendo": {
+    "name": "Erida Bendo"
+  },
+  "Felix-Mallinder": {
+    "name": "Felix Mallinder"
+  },
+  "FraserGreenroyd": {
+    "name": "Fraser Greenroyd"
+  },
+  "FredericBourgeon": {
+    "name": "Frédéric Bourgeon"
+  },
+  "GCRA101": {
+    "name": "Giorgio Carlo Roberto Albieri"
+  },
+  "IsakLarbornBH": {
+    "name": "Isak Larborn"
+  },
+  "IsakNaslundBh": {
+    "name": "Isak Näslund"
+  },
+  "JohannaOlin1": {
+    "name": "Johanna Olin"
+  },
+  "JohnSloane": {
+    "name": "John Sloane"
+  },
+  "JonathanNillius": {
+    "name": "Jonathan Nillius"
+  },
+  "JoseAguilarBH": {
+    "name": "Jose Castro Aguilar"
+  },
+  "KalleEdstroem": {
+    "name": "Kalle Edstroem"
+  },
+  "Kar-Myl": {
+    "name": "Kartheek Mylavarapu"
+  },
+  "Kenton-Phillips": {
+    "name": "Kenton Phillips"
+  },
+  "KentonPhillips-BH": {
+    "name": "Kenton Phillips"
+  },
+  "KonradStolarski": {
+    "name": "Konrad Stolarski"
+  },
+  "LMarkowski": {
+    "name": "Łukasz Markowski"
+  },
+  "LivAndersson": {
+    "name": "Liv Andersson"
+  },
+  "MILeach": {
+    "name": "MILeach"
+  },
+  "MajaLindroth": {
+    "name": "Maja Lindroth"
+  },
+  "Maria1129": {
+    "name": "Maria Roman"
+  },
+  "MariaGlimaker": {
+    "name": "Maria Glimaker"
+  },
+  "Martian42": {
+    "name": "Marvin Suen"
+  },
+  "MartinHenriksen": {
+    "name": "Martin B. Henriksen"
+  },
+  "MatildaSvenssonBH": {
+    "name": "Matilda Svensson"
+  },
+  "MayaAroraJonsson": {
+    "name": "Maya Arora-Jonsson"
+  },
+  "Nazeefa710": {
+    "name": "Nazeefa Bushra"
+  },
+  "Oceania2018": {
+    "name": "Haiping"
+  },
+  "PaulPoinet": {
+    "name": "Paul Poinet"
+  },
+  "PiotrBuda": {
+    "name": "PiotrBuda"
+  },
+  "RasmusCanfjorden": {
+    "name": "Rasmus Canfjorden"
+  },
+  "RichardWhitfield": {
+    "name": "Richard Whitfield"
+  },
+  "Robadob": {
+    "name": "Robert Chisholm"
+  },
+  "SallyPickard": {
+    "name": "Sally Pickard"
+  },
+  "StephennipBH": {
+    "name": "StephennipBH"
+  },
+  "Tom-Kingstone": {
+    "name": "Thomas Edward Kingstone"
+  },
+  "TosteSkDa": {
+    "name": "Toste Skanberg Dahlstedt"
+  },
+  "Tyriar": {
+    "name": "Daniel Imms"
+  },
+  "WojciechBuda00": {
+    "name": "wojciech buda"
+  },
+  "adam-sobieski": {
+    "name": "Adam Sobieski"
+  },
+  "adecler": {
+    "name": "Arnaud Declercq"
+  },
+  "agneslindblom": {
+    "name": "Agnes Lindblom"
+  },
+  "ajensen19": {
+    "name": "Aurora Jensen"
+  },
+  "akaraiskou": {
+    "name": "Antigoni Karaiskou"
+  },
+  "al-fisher": {
+    "name": "Al Fisher"
+  },
+  "albinber": {
+    "name": "Albin Bergh"
+  },
+  "alelom": {
+    "name": "Alessio Lombardi"
+  },
+  "alexissantella": {
+    "name": "Alexis Santella"
+  },
+  "alexradne": {
+    "name": "Alex Radne"
+  },
+  "amorehouse-bh": {
+    "name": "Anthony Morehouse"
+  },
+  "andrbak": {
+    "name": "Andreas Bak"
+  },
+  "andrewengh": {
+    "name": "Andrew Engh"
+  },
+  "annastigenberg": {
+    "name": "Anna Stigenberg"
+  },
+  "arvidsigurdsson": {
+    "name": "Arvid Sigurdsson"
+  },
+  "carmenfan": {
+    "name": "Carmen Fan"
+  },
+  "charliebrookerBH": {
+    "name": "Charlie Brooker"
+  },
+  "deepakkumar1984": {
+    "name": "Deesha Tech"
+  },
+  "desaiwangBH": {
+    "name": "Desai Wang"
+  },
+  "didimitrie": {
+    "name": "Dimitrie Stefanescu"
+  },
+  "dmitryzelenkin": {
+    "name": "Dmitry Zelenkin"
+  },
+  "eUsmanovaBH": {
+    "name": "Elina Usmanova"
+  },
+  "edforsberg": {
+    "name": "Erik Forsberg"
+  },
+  "emidio-piermarini": {
+    "name": "JS"
+  },
+  "emilsvedjer": {
+    "name": "Emil Svedjer"
+  },
+  "enarhi": {
+    "name": "Erik Narhi"
+  },
+  "epersson": {
+    "name": "Einar Persson"
+  },
+  "epignatelli": {
+    "name": "Eduardo Pignatelli"
+  },
+  "evanPantazis": {
+    "name": "Evangelos Pantazis"
+  },
+  "felipebandeiramm": {
+    "name": "felipebandeiramm"
+  },
+  "fraguada": {
+    "name": "Luis E. Fraguada"
+  },
+  "geirsoderin": {
+    "name": "Geir Soderin"
+  },
+  "gideontamir16": {
+    "name": "Gideon Tamir"
+  },
+  "harmanpa": {
+    "name": "Peter Harman"
+  },
+  "hedvigkjellander": {
+    "name": "Hedvig Kjellander"
+  },
+  "henon": {
+    "name": "Meinrad Recheis"
+  },
+  "hmoubarak": {
+    "name": "Habiba Moubarak"
+  },
+  "izzylys": {
+    "name": "izzy lys"
+  },
+  "jacosoft": {
+    "name": "Jaco Bekker"
+  },
+  "jamesramsden-bh": {
+    "name": "James Ramsden"
+  },
+  "johannaisak": {
+    "name": "Johanna Isaksson"
+  },
+  "jtrainor1": {
+    "name": "Jack Trainor"
+  },
+  "jukkasus": {
+    "name": "jukkasus"
+  },
+  "junjieim": {
+    "name": "Junjie"
+  },
+  "kThorsager": {
+    "name": "Kalle Thorsager"
+  },
+  "kaichelliah": {
+    "name": "Kai Chelliah"
+  },
+  "kasiawod": {
+    "name": "Kasia Wodzisz"
+  },
+  "kayleighhoude": {
+    "name": "Kayleigh Houde"
+  },
+  "kprusicka": {
+    "name": "Karolina Prusicka"
+  },
+  "lborgenstam": {
+    "name": "Ludvig Borgenstam"
+  },
+  "linaeriksson": {
+    "name": "Lina Eriksson"
+  },
+  "linhnam-nguyen": {
+    "name": "linhnam-nguyen"
+  },
+  "livand": {
+    "name": "livand"
+  },
+  "m-clare": {
+    "name": "Maryanne Wachter"
+  },
+  "mariatjader": {
+    "name": "Maria Tjader"
+  },
+  "maryannewachter": {
+    "name": "Maryanne Wachter"
+  },
+  "mchaf": {
+    "name": "Manuel Chafart"
+  },
+  "mcunliffe84": {
+    "name": "Mark Cunliffe"
+  },
+  "michaelhoehn": {
+    "name": "Michael Hoehn"
+  },
+  "michal-pekacki": {
+    "name": "Michal Pekacki"
+  },
+  "michaldengusiak": {
+    "name": "Michal Dengusiak"
+  },
+  "milogillot-BH": {
+    "name": "Milo Gillot"
+  },
+  "mishaelnuh": {
+    "name": "Mish Nuh"
+  },
+  "mondus": {
+    "name": "Paul Richmond"
+  },
+  "mozhgan-kch": {
+    "name": "Mozhgan Kabiri Chimeh"
+  },
+  "msandmer": {
+    "name": "Madelene Sandmer"
+  },
+  "mswaidan": {
+    "name": "Matthew Swaidan"
+  },
+  "ncbrown2": {
+    "name": "Nathan Brown"
+  },
+  "njsmithies": {
+    "name": "Nicola Smithies"
+  },
+  "non-manifold": {
+    "name": "non-manifold"
+  },
+  "ofekbruhis": {
+    "name": "Ofek Bruhis"
+  },
+  "oscarborgstrom": {
+    "name": "Oscar Borgström"
+  },
+  "pawelbaran": {
+    "name": "Pawel Baran"
+  },
+  "pearswj": {
+    "name": "Will Pearson"
+  },
+  "peterjamesnugent": {
+    "name": "Peter Nugent"
+  },
+  "polnischfrosch": {
+    "name": "AaronWagner"
+  },
+  "ptheywood": {
+    "name": "Peter Heywood"
+  },
+  "puriasafarihesari": {
+    "name": "Puria Safari Hesari"
+  },
+  "rboulton-BH": {
+    "name": "Ross Boulton"
+  },
+  "reneschulte": {
+    "name": "Rene Schulte"
+  },
+  "robinflyman": {
+    "name": "Robin Flyman"
+  },
+  "rolyhudson": {
+    "name": "Roly Hudson"
+  },
+  "rwemay": {
+    "name": "Rob May"
+  },
+  "samuelbasimalla": {
+    "name": "Samuel Basimalla"
+  },
+  "sofmal": {
+    "name": "Sofia Malmsten"
+  },
+  "staintono": {
+    "name": "Oliver Stainton"
+  },
+  "svaz00": {
+    "name": "Sam Vazquez"
+  },
+  "teocomi": {
+    "name": "Matteo Cominetti"
+  },
+  "tg359": {
+    "name": "Tristan Gerrish"
+  },
+  "theThorsager": {
+    "name": "Kalle Thorsager"
+  },
+  "tiagogrossi": {
+    "name": "Tiago Del Grossi"
+  },
+  "tsvilans": {
+    "name": "Tom Svilans"
+  },
+  "vgreen-BH": {
+    "name": "Valerie Green"
+  },
+  "vietle-bh": {
+    "name": "Viet Le"
+  }
+}

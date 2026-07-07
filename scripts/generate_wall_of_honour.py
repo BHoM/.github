@@ -1,6 +1,7 @@
 """Generate BHoM Wall of Honour and splice into profile/README.md."""
 from __future__ import annotations
 
+import json
 import os
 import re
 import sys
@@ -15,10 +16,13 @@ from scripts.github_api import GITHUB_API, get_one, make_session, paginated_get
 
 
 def list_org_repos(session: requests.Session, org: str) -> list[dict[str, Any]]:
-    """List non-archived repos in `org`, excluding the org's `.github` repo."""
+    """List repos in `org`, excluding the org's `.github` repo.
+
+    Archived repos are included so their contributors stay on the wall.
+    """
     url = f"{GITHUB_API}/orgs/{org}/repos"
     all_repos = paginated_get(session, url, params={"per_page": 100, "type": "all"})
-    return [r for r in all_repos if not r["archived"] and r["name"] != ".github"]
+    return [r for r in all_repos if r["name"] != ".github"]
 
 
 def fetch_repo_contributors(session: requests.Session, org: str, repo: str) -> list[dict[str, Any]]:
@@ -86,7 +90,11 @@ AVATAR_SIZE = 100
 
 def _contributors_badge(count: int) -> str:
     color = "lightgrey" if count == 0 else "brightgreen"
-    return f"![Contributors](https://img.shields.io/badge/contributors-{count}-{color})"
+    # HTML img rather than markdown ![]() so it renders inside the <p> wrapper
+    return (
+        f"<img alt=\"Contributors\" src=\"https://img.shields.io/badge/contributors-{count}-{color}"
+        "?style=flat-square&logo=github&logoColor=white\" />"
+    )
 
 
 def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> str:
@@ -96,8 +104,8 @@ def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> s
     if not contributors:
         return (
             "<!-- WALL:START -->\n"
-            "## Our Contributors\n\n"
-            f"{badge}\n\n"
+            "<h2 align=\"center\">Our Contributors</h2>\n\n"
+            f"<p align=\"center\">{badge}</p>\n\n"
             "Wall coming soon. No contributors yet.\n\n"
             f"_Last updated: {last_updated}_\n"
             "<!-- WALL:END -->"
@@ -116,8 +124,9 @@ def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> s
 
     return (
         "<!-- WALL:START -->\n"
-        "## Our Contributors\n\n"
-        f"{badge}\n\n"
+        "<h2 align=\"center\">Our Contributors</h2>\n\n"
+        f"<p align=\"center\">{badge}</p>\n\n"
+        "<p align=\"center\">Thank you to everyone who has contributed to the BHoM.</p>\n\n"
         "<table>\n"
         + "\n".join(rows)
         + "\n</table>\n\n"
@@ -128,14 +137,55 @@ def render_wall(contributors: dict[str, dict[str, Any]], last_updated: str) -> s
 
 def _render_cell(login: str, info: dict[str, Any]) -> str:
     name = info["name"]
+    cell_width = f"{100 / GRID_COLS:.2f}%"
+    # Request the avatar at 2x display size so it stays sharp on hi-DPI screens
     return (
-        "    <td align=\"center\">\n"
-        f"      <a href=\"https://github.com/{login}\">"
-        f"<img src=\"https://github.com/{login}.png?size={AVATAR_SIZE}\" "
-        f"width=\"{AVATAR_SIZE}\" height=\"{AVATAR_SIZE}\" /><br/>"
+        f"    <td align=\"center\" valign=\"top\" width=\"{cell_width}\">\n"
+        f"      <a href=\"https://github.com/{login}\" title=\"@{login}\">"
+        f"<img src=\"https://github.com/{login}.png?size={AVATAR_SIZE * 2}\" "
+        f"width=\"{AVATAR_SIZE}\" height=\"{AVATAR_SIZE}\" alt=\"{name}\" /><br/>"
         f"<sub><b>{name}</b></sub></a>\n"
         "    </td>"
     )
+
+
+DEFAULT_ROSTER_PATH = "profile/wall_roster.json"
+
+
+def load_roster(roster_path: str) -> dict[str, dict[str, Any]]:
+    """Load the persisted roster; missing file means an empty roster."""
+    path = Path(roster_path)
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def save_roster(roster_path: str, roster: dict[str, dict[str, Any]]) -> None:
+    """Write the roster as stable, diff-friendly JSON."""
+    path = Path(roster_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(roster, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def merge_into_roster(
+    roster: dict[str, dict[str, Any]],
+    live: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Union live contributors into the roster. Live data wins; absent logins persist.
+
+    Denylisted logins are dropped even if a past run added them.
+    """
+    merged = {
+        login: {"name": info["name"]}
+        for login, info in roster.items()
+        if login not in DENYLISTED_LOGINS
+    }
+    for login, info in live.items():
+        merged[login] = {"name": info["name"]}
+    return merged
 
 
 WALL_MARKER_START = "<!-- WALL:START -->"
@@ -184,6 +234,7 @@ def main() -> int:
     token = os.environ["GITHUB_TOKEN"]
     org = os.environ.get("GITHUB_ORG", "BHoM")
     readme_path = os.environ.get("README_PATH", DEFAULT_README_PATH)
+    roster_path = os.environ.get("ROSTER_PATH", DEFAULT_ROSTER_PATH)
 
     session = make_session(token)
 
@@ -202,8 +253,14 @@ def main() -> int:
     print(f"Aggregated to {len(aggregated)} unique contributors. Enriching display names...")
 
     enriched = enrich_display_names(session, aggregated)
+
+    roster = load_roster(roster_path)
+    merged = merge_into_roster(roster, enriched)
+    save_roster(roster_path, merged)
+    print(f"Roster: {len(roster)} known, {len(merged)} after merge.")
+
     today = date.today().isoformat()
-    wall_md = render_wall(enriched, today)
+    wall_md = render_wall(merged, today)
 
     changed = splice_into_readme(readme_path, wall_md)
     if changed:

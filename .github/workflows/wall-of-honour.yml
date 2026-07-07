@@ -29,10 +29,10 @@ jobs:
           GITHUB_ORG: BHoM
       - name: Commit if changed
         run: |
-          if [[ -n "$(git status --porcelain profile/README.md)" ]]; then
+          if [[ -n "$(git status --porcelain profile/README.md profile/wall_roster.json)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add profile/README.md
+            git add profile/README.md profile/wall_roster.json
             git commit -m "chore(wall): refresh wall of honour"
             git push
           else

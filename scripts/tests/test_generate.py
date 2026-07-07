@@ -7,7 +7,8 @@ from scripts.github_api import make_session
 
 
 @responses.activate
-def test_list_org_repos_filters_archived_and_dot_github():
+def test_list_org_repos_includes_archived_excludes_dot_github():
+    # Archived repos are kept so their contributors stay on the wall.
     responses.add(
         responses.GET,
         "https://api.github.com/orgs/BHoM/repos",
@@ -22,7 +23,7 @@ def test_list_org_repos_filters_archived_and_dot_github():
     session = make_session("fake-token")
     result = list_org_repos(session, "BHoM")
     names = [r["name"] for r in result]
-    assert names == ["BHoM", "BHoM_Engine"]
+    assert names == ["BHoM", "old_repo", "BHoM_Engine"]
 
 
 @responses.activate
@@ -229,6 +230,42 @@ def test_render_wall_sort_is_case_insensitive_and_unicode():
     assert names_in_order == sorted(names_in_order)
 
 
+from scripts.generate_wall_of_honour import load_roster, merge_into_roster, save_roster
+
+
+def test_load_roster_missing_file_returns_empty():
+    with tempfile.TemporaryDirectory() as tmp:
+        assert load_roster(str(Path(tmp) / "wall_roster.json")) == {}
+
+
+def test_roster_save_load_roundtrip():
+    with tempfile.TemporaryDirectory() as tmp:
+        path = str(Path(tmp) / "wall_roster.json")
+        roster = {"alice": {"name": "Alice Example"}, "ångström": {"name": "Ångström"}}
+        save_roster(path, roster)
+        assert load_roster(path) == roster
+
+
+def test_merge_preserves_absent_logins_and_refreshes_live():
+    roster = {
+        "gone": {"name": "Deleted Account"},
+        "alice": {"name": "Old Name"},
+    }
+    live = {"alice": {"name": "Alice Example", "avatar_url": "https://x/a", "contributions": 10}}
+    merged = merge_into_roster(roster, live)
+    assert merged == {
+        "gone": {"name": "Deleted Account"},
+        "alice": {"name": "Alice Example"},
+    }
+
+
+def test_merge_drops_denylisted_roster_entries():
+    # A login denylisted after a past run added it must not linger in the roster.
+    roster = {"BHoMBot": {"name": "BHoMBot"}, "alice": {"name": "Alice Example"}}
+    merged = merge_into_roster(roster, {})
+    assert merged == {"alice": {"name": "Alice Example"}}
+
+
 from scripts.generate_wall_of_honour import splice_into_readme
 
 
@@ -313,14 +350,25 @@ def test_main_end_to_end(monkeypatch, tmp_path):
     )
 
     readme = tmp_path / "profile" / "README.md"
+    roster_path = tmp_path / "profile" / "wall_roster.json"
+    # Pre-seed the roster with a login no longer returned by the API
+    roster_path.parent.mkdir(parents=True, exist_ok=True)
+    roster_path.write_text('{"gone": {"name": "Departed Contributor"}}', encoding="utf-8")
     monkeypatch.setenv("GITHUB_TOKEN", "fake-token")
     monkeypatch.setenv("GITHUB_ORG", "BHoM")
     monkeypatch.setenv("README_PATH", str(readme))
+    monkeypatch.setenv("ROSTER_PATH", str(roster_path))
 
     exit_code = main()
     assert exit_code == 0
     assert readme.exists()
     content = readme.read_text(encoding="utf-8")
     assert "Alice Example" in content
-    assert "img.shields.io/badge/contributors-1-brightgreen" in content  # Only alice; bot filtered
+    assert "Departed Contributor" in content  # roster-only login stays on the wall
+    assert "img.shields.io/badge/contributors-2-brightgreen" in content  # alice + gone; bot filtered
     assert "dependabot" not in content
+    roster = load_roster(str(roster_path))
+    assert roster == {
+        "alice": {"name": "Alice Example"},
+        "gone": {"name": "Departed Contributor"},
+    }

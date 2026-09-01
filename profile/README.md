@@ -23,7 +23,7 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
 <!-- WALL:START -->
 <h2 align="center">Our Contributors</h2>
 
-<p align="center"><img alt="Contributors" src="https://img.shields.io/badge/contributors-152-brightgreen?style=flat-square&logo=github&logoColor=white" /></p>
+<p align="center"><img alt="Contributors" src="https://img.shields.io/badge/contributors-153-brightgreen?style=flat-square&logo=github&logoColor=white" /></p>
 
 <p align="center">Thank you to everyone who has contributed to the BHoM.</p>
 
@@ -315,6 +315,9 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
       <a href="https://github.com/livand" title="@livand"><img src="https://github.com/livand.png?size=200" width="100" height="100" alt="livand" /><br/><sub><b>livand</b></sub></a>
     </td>
     <td align="center" valign="top" width="14.29%">
+      <a href="https://github.com/lntutor" title="@lntutor"><img src="https://github.com/lntutor.png?size=200" width="100" height="100" alt="Loi Nguyen" /><br/><sub><b>Loi Nguyen</b></sub></a>
+    </td>
+    <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/lborgenstam" title="@lborgenstam"><img src="https://github.com/lborgenstam.png?size=200" width="100" height="100" alt="Ludvig Borgenstam" /><br/><sub><b>Ludvig Borgenstam</b></sub></a>
     </td>
     <td align="center" valign="top" width="14.29%">
@@ -323,11 +326,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/msandmer" title="@msandmer"><img src="https://github.com/msandmer.png?size=200" width="100" height="100" alt="Madelene Sandmer" /><br/><sub><b>Madelene Sandmer</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/MajaLindroth" title="@MajaLindroth"><img src="https://github.com/MajaLindroth.png?size=200" width="100" height="100" alt="Maja Lindroth" /><br/><sub><b>Maja Lindroth</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/mchaf" title="@mchaf"><img src="https://github.com/mchaf.png?size=200" width="100" height="100" alt="Manuel Chafart" /><br/><sub><b>Manuel Chafart</b></sub></a>
     </td>
@@ -346,11 +349,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/MartinHenriksen" title="@MartinHenriksen"><img src="https://github.com/MartinHenriksen.png?size=200" width="100" height="100" alt="Martin B. Henriksen" /><br/><sub><b>Martin B. Henriksen</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/Martian42" title="@Martian42"><img src="https://github.com/Martian42.png?size=200" width="100" height="100" alt="Marvin Suen" /><br/><sub><b>Marvin Suen</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/m-clare" title="@m-clare"><img src="https://github.com/m-clare.png?size=200" width="100" height="100" alt="Maryanne Wachter" /><br/><sub><b>Maryanne Wachter</b></sub></a>
     </td>
@@ -369,11 +372,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/MayaAroraJonsson" title="@MayaAroraJonsson"><img src="https://github.com/MayaAroraJonsson.png?size=200" width="100" height="100" alt="Maya Arora-Jonsson" /><br/><sub><b>Maya Arora-Jonsson</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/henon" title="@henon"><img src="https://github.com/henon.png?size=200" width="100" height="100" alt="Meinrad Recheis" /><br/><sub><b>Meinrad Recheis</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/michaelhoehn" title="@michaelhoehn"><img src="https://github.com/michaelhoehn.png?size=200" width="100" height="100" alt="Michael Hoehn" /><br/><sub><b>Michael Hoehn</b></sub></a>
     </td>
@@ -392,11 +395,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/mishaelnuh" title="@mishaelnuh"><img src="https://github.com/mishaelnuh.png?size=200" width="100" height="100" alt="Mish Nuh" /><br/><sub><b>Mish Nuh</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/mozhgan-kch" title="@mozhgan-kch"><img src="https://github.com/mozhgan-kch.png?size=200" width="100" height="100" alt="Mozhgan Kabiri Chimeh" /><br/><sub><b>Mozhgan Kabiri Chimeh</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/ncbrown2" title="@ncbrown2"><img src="https://github.com/ncbrown2.png?size=200" width="100" height="100" alt="Nathan Brown" /><br/><sub><b>Nathan Brown</b></sub></a>
     </td>
@@ -415,11 +418,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/staintono" title="@staintono"><img src="https://github.com/staintono.png?size=200" width="100" height="100" alt="Oliver Stainton" /><br/><sub><b>Oliver Stainton</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/oscarborgstrom" title="@oscarborgstrom"><img src="https://github.com/oscarborgstrom.png?size=200" width="100" height="100" alt="Oscar Borgström" /><br/><sub><b>Oscar Borgström</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/PaulPoinet" title="@PaulPoinet"><img src="https://github.com/PaulPoinet.png?size=200" width="100" height="100" alt="Paul Poinet" /><br/><sub><b>Paul Poinet</b></sub></a>
     </td>
@@ -438,11 +441,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/peterjamesnugent" title="@peterjamesnugent"><img src="https://github.com/peterjamesnugent.png?size=200" width="100" height="100" alt="Peter Nugent" /><br/><sub><b>Peter Nugent</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/PiotrBuda" title="@PiotrBuda"><img src="https://github.com/PiotrBuda.png?size=200" width="100" height="100" alt="PiotrBuda" /><br/><sub><b>PiotrBuda</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/puriasafarihesari" title="@puriasafarihesari"><img src="https://github.com/puriasafarihesari.png?size=200" width="100" height="100" alt="Puria Safari Hesari" /><br/><sub><b>Puria Safari Hesari</b></sub></a>
     </td>
@@ -461,11 +464,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/Robadob" title="@Robadob"><img src="https://github.com/Robadob.png?size=200" width="100" height="100" alt="Robert Chisholm" /><br/><sub><b>Robert Chisholm</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/robinflyman" title="@robinflyman"><img src="https://github.com/robinflyman.png?size=200" width="100" height="100" alt="Robin Flyman" /><br/><sub><b>Robin Flyman</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/rolyhudson" title="@rolyhudson"><img src="https://github.com/rolyhudson.png?size=200" width="100" height="100" alt="Roly Hudson" /><br/><sub><b>Roly Hudson</b></sub></a>
     </td>
@@ -484,11 +487,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/sakanni" title="@sakanni"><img src="https://github.com/sakanni.png?size=200" width="100" height="100" alt="Seun Akanni" /><br/><sub><b>Seun Akanni</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/sofmal" title="@sofmal"><img src="https://github.com/sofmal.png?size=200" width="100" height="100" alt="Sofia Malmsten" /><br/><sub><b>Sofia Malmsten</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/StephennipBH" title="@StephennipBH"><img src="https://github.com/StephennipBH.png?size=200" width="100" height="100" alt="StephennipBH" /><br/><sub><b>StephennipBH</b></sub></a>
     </td>
@@ -507,11 +510,11 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/TosteSkDa" title="@TosteSkDa"><img src="https://github.com/TosteSkDa.png?size=200" width="100" height="100" alt="Toste Skanberg Dahlstedt" /><br/><sub><b>Toste Skanberg Dahlstedt</b></sub></a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/tg359" title="@tg359"><img src="https://github.com/tg359.png?size=200" width="100" height="100" alt="Tristan Gerrish" /><br/><sub><b>Tristan Gerrish</b></sub></a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top" width="14.29%">
       <a href="https://github.com/vgreen-BH" title="@vgreen-BH"><img src="https://github.com/vgreen-BH.png?size=200" width="100" height="100" alt="Valerie Green" /><br/><sub><b>Valerie Green</b></sub></a>
     </td>
@@ -530,5 +533,5 @@ Please let us know how can we improve it! Please raise GitHub Issues in the [Doc
   </tr>
 </table>
 
-_Last updated: 2026-08-01_
+_Last updated: 2026-09-01_
 <!-- WALL:END -->
